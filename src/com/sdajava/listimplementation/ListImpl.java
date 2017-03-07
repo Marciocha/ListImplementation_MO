@@ -7,14 +7,14 @@ public class ListImpl {
 
     //tworze klase zagniezdzona
 
-        private Node start;
-        private Node stop;
+        private Node begin;
+        private Node end;
 
         //funkcja ktora nam wyzeruje te dwa elementy
 
         public ListImpl() {
-            this.start = null; //this nie musi byc bo nie mamy takich samych nazw
-            this.stop = null; //this nie musi byc
+            this.begin = null; //this nie musi byc bo nie mamy takich samych nazw
+            this.end = null; //this nie musi byc
         }
 
         //funkcja ktora bedzie odpowiadac za wstawienie czegos
@@ -29,10 +29,10 @@ public class ListImpl {
             //tworzenie nowego elementu
 
             if (checkIsEmpty()) {
-                start = node;
-                stop = node;
+                begin = node;
+                end = node;
             } else {
-                Node pm = start; //klase start przypisujemy do wezla pm
+                Node pm = begin; //klase begin przypisujemy do wezla pm
 
                 //pobieram nastepne elementy z wykorzystaniem while do momentu az bedzie rozny od nulla
 
@@ -40,10 +40,10 @@ public class ListImpl {
                     pm.getNext(); //iteruje sie
 
                     //jesli sie przeiterujemy po tym wezle to trzeba teraz ten element wstawic
-                    if (pm == start) {
+                    if (pm == begin) {
                         node.setNext(pm);
                         pm.setPrev(node);
-                        start = node;
+                        begin = node;
                         break; //przerywa petle wychodzi z niej
                         //a w przeciwnym wypadku
                     } else {
@@ -56,16 +56,35 @@ public class ListImpl {
 
                 }
                 if (pm == null) {
-                    stop.setNext(node);
-                    node.setPrev(stop);
-                    stop = node;
+                    end.setNext(node);
+                    node.setPrev(end);
+                    end = node;
                 }
             }
 
         }
 
         public boolean checkIsEmpty(){
-            return (start == null);
+            return (begin == null);
         }
+
+        public void showList(){
+
+            Node list = end; //wyswietlanie listy z wykorzystaniem wezla
+            while(list != null){ //niech wyswietla liste az nie bedzie nullem
+                System.out.println(list.getValue());
+                list = list.getPrev();
+            }
+        }
+        //musimy przeiterowqac sie po calej liscie
+    public int size(){
+            Node list = begin;
+            int counter = 0;
+            while(list != null){
+                counter++;
+                list = list.getNext();
+            }
+            return counter;
+    }
 }
 
